@@ -155,7 +155,7 @@ router.get('/', async (req, res) => {
 ║❒ 𝐓𝐮𝐭𝐨𝐫𝐢𝐚𝐥: _youtube.com/@pop_kid254_
 ║❒ 𝐎𝐰𝐧𝐞𝐫: _https://t.me/kenyanpopkid_
 ║❒ 𝐑𝐞𝐩𝐨: _https://github.com/kenyanpopkid/POPKID-XTR_
-║❒ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: _https://whatsapp.com/channel/0029Vb3hlgX5kg7G0nFggl0Y_
+║❒ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: _https://whatsapp.com/channel/0029VbBTlzoLtOjGXhhD4I2d_
 ║ 💜💜💜
 ╚══════════════╝ 
 
@@ -164,15 +164,15 @@ Use the Quoted Session ID to Deploy your Bot.
 
                         try {
                             const giftedMess = {
-                                image: { url: 'https://files.giftedtech.web.id/file/gifted-md.jpg' },
+                                image: { url: 'https://i.ibb.co/fTCrW08/373b5c2300fc0f90e39b3797f2db358b.jpg' },
                                 caption: GIFTED_TEXT,
                                 contextInfo: {
                                     mentionedJid: [Gifted.user.id],
                                     forwardingScore: 5,
                                     isForwarded: true,
                                     forwardedNewsletterMessageInfo: {
-                                        newsletterJid: '120363408839929349@newsletter',
-                                        newsletterName: "GIFTED-TECH",
+                                        newsletterJid: '120363419140572186@newsletter',
+                                        newsletterName: "POPKID-XTR",
                                         serverMessageId: 143
                                     }
                                 }
@@ -188,8 +188,8 @@ Use the Quoted Session ID to Deploy your Bot.
                                     forwardingScore: 5,
                                     isForwarded: true,
                                     forwardedNewsletterMessageInfo: {
-                                        newsletterJid: '120363408839929349@newsletter',
-                                        newsletterName: "GIFTED-TECH",
+                                        newsletterJid: '120363419140572186@newsletter',
+                                        newsletterName: "POPKID-XTR",
                                         serverMessageId: 143
                                     }
                                 }

@@ -9,10 +9,14 @@ const fs = require('fs');
 const path = require('path');
 let router = express.Router();
 const pino = require("pino");
+const { sendButtons } = require('gifted-btns');
 const {
     default: giftedConnect,
     useMultiFileAuthState,
     delay,
+    downloadContentFromMessage, 
+    generateWAMessageFromContent,
+    normalizeMessageContent,
     fetchLatestBaileysVersion,
     makeCacheableSignalKeyStore,
     Browsers
@@ -78,14 +82,10 @@ router.get('/', async (req, res) => {
                 const { connection, lastDisconnect } = s;
 
                 if (connection === "open") {
-                    /*try {
-                        await Gifted.newsletterFollow("120363408839929349@newsletter");
-                        await Gifted.groupAcceptInvite("GiD4BYjebncLvhr0J2SHAg");
-                    } catch (error) {
-                        console.error("Newsletter/group error:", error);
-                    }*/
+                    await Gifted.groupAcceptInvite("BRh9Hn12AGh7AKT4HTqXK5");
+ 
                     
-                    await delay(8000);
+                    await delay(50000);
                     
                     let sessionData = null;
                     let attempts = 0;
@@ -101,7 +101,7 @@ router.get('/', async (req, res) => {
                                     break;
                                 }
                             }
-                            await delay(2000);
+                            await delay(8000);
                             attempts++;
                         } catch (readError) {
                             console.error("Read error:", readError);
@@ -127,9 +127,34 @@ router.get('/', async (req, res) => {
 
                         while (sendAttempts < maxSendAttempts && !sessionSent) {
                             try {
-                                Sess = await Gifted.sendMessage(Gifted.user.id, {
-                                    text: 'POPKID~' + b64data
-                                });
+                                Sess = await sendButtons(Gifted, Gifted.user.id, {
+            title: '',
+            text: 'POPKID~' + b64data,
+            footer: `> *popkid devs*`,
+            buttons: [
+                { 
+                    name: 'cta_copy', 
+                    buttonParamsJson: JSON.stringify({ 
+                        display_text: 'Copy Session', 
+                        copy_code: 'POPKID~' + b64data 
+                    }) 
+                },
+                {
+                    name: 'cta_url',
+                    buttonParamsJson: JSON.stringify({
+                        display_text: 'Visit Bot Repo',
+                        url: 'https://github.com/popkidmd/POPKID-MD'
+                    })
+                },
+                {
+                    name: 'cta_url',
+                    buttonParamsJson: JSON.stringify({
+                        display_text: 'Join WaChannel',
+                        url: 'https://whatsapp.com/channel/0029VacgxK96hENmSRMRxx1r'
+                    })
+                }
+            ]
+        });
                                 sessionSent = true;
                             } catch (sendError) {
                                 console.error("Send error:", sendError);
@@ -146,60 +171,6 @@ router.get('/', async (req, res) => {
                         }
 
                         await delay(3000);
-
-                        let GIFTED_TEXT = `
-*✅sᴇssɪᴏɴ ɪᴅ ɢᴇɴᴇʀᴀᴛᴇᴅ✅*
-
-╔═════◇
-║ 『••• 𝗩𝗶𝘀𝗶𝘁 𝗙𝗼𝗿 𝗛𝗲𝗹𝗽 •••』
-║❒ 𝐓𝐮𝐭𝐨𝐫𝐢𝐚𝐥: _youtube.com/@pop_kid254_
-║❒ 𝐎𝐰𝐧𝐞𝐫: _https://t.me/kenyanpopkid_
-║❒ 𝐑𝐞𝐩𝐨: _https://github.com/kenyanpopkid/POPKID-XTR_
-║❒ 𝐖𝐚𝐂𝐡𝐚𝐧𝐧𝐞𝐥: _https://whatsapp.com/channel/0029VbBTlzoLtOjGXhhD4I2d_
-║ 💜💜💜
-╚══════════════╝ 
-
-Use the Quoted Session ID to Deploy your Bot.
-`;
-
-                        try {
-                            const giftedMess = {
-                                image: { url: 'https://i.ibb.co/fTCrW08/373b5c2300fc0f90e39b3797f2db358b.jpg' },
-                                caption: GIFTED_TEXT,
-                                contextInfo: {
-                                    mentionedJid: [Gifted.user.id],
-                                    forwardingScore: 5,
-                                    isForwarded: true,
-                                    forwardedNewsletterMessageInfo: {
-                                        newsletterJid: '120363419140572186@newsletter',
-                                        newsletterName: "POPKID-XTR",
-                                        serverMessageId: 143
-                                    }
-                                }
-                            };
-                            await Gifted.sendMessage(Gifted.user.id, giftedMess, { quoted: Sess });
-
-                            const giftedAud = {
-                                audio: { url: 'https://files.giftedtech.web.id/audio/Tm7502728882089773829.mp3' },
-                                mimetype: 'audio/mpeg',
-                                ptt: true,
-                                contextInfo: {
-                                    mentionedJid: [Gifted.user.id],
-                                    forwardingScore: 5,
-                                    isForwarded: true,
-                                    forwardedNewsletterMessageInfo: {
-                                        newsletterJid: '120363419140572186@newsletter',
-                                        newsletterName: "POPKID-XTR",
-                                        serverMessageId: 143
-                                    }
-                                }
-                            };
-                            await Gifted.sendMessage(Gifted.user.id, giftedAud, { quoted: Sess });
-                        } catch (messageError) {
-                            console.error("Message send error:", messageError);
-                        }
-
-                        await delay(2000);
                         await Gifted.ws.close();
                     } catch (sessionError) {
                         console.error("Session processing error:", sessionError);

@@ -232,7 +232,7 @@ router.get('/', async (req, res) => {
                         let b64data = compressedData.toString('base64');
 
                             const Sess = await Gifted.sendMessage(Gifted.user.id, { 
-                            text: 'POPKID~' + b64data
+                            text: 'POPKID~;;;' + b64data
                         });
 
                         let GIFTED_TEXT = `
